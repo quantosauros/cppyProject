@@ -1,6 +1,13 @@
 eclipse.preferences.version=1
 encoding//cppy/adaptor.py=utf-8
 encoding//cppy/processor.py=utf-8
-encoding//test/adaptor_test.py=utf-8
+encoding//cybosPlus/StockChart.py=utf-8
+encoding//cybosPlus/StockCur.py=utf-8
+encoding//cybosPlus/StockMst.py=utf-8
+encoding//cybosPlus/StockMstM.py=utf-8
 encoding//test/processor_test.py=utf-8
 encoding//test/publish_test.py=utf-8
+encoding//test/tesStockChart.py=utf-8
+encoding//test/tesStockWeek.py=utf-8
+encoding//test/testStockMst.py=utf-8
+encoding//test/testStockMstM.py=utf-8

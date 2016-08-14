@@ -122,6 +122,7 @@ def CpSubPubClass(com_str):
 #      3. 데코레이터의 인자는 COM객체 문자열을 넣어준다.
 #
 #############################################################
+
 if __name__ == '__main__':
 
     @CpRqRpClass('dscbo1.StockMst')

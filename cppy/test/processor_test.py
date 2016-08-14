@@ -6,11 +6,18 @@ evntproc = None
 
 @CpRqRpClass('CpSysDib.StockChart')
 class StkChart(object):
+    def __init__(self):
+        self.itm_cod = itm_cod
+    
+    def setInputValue(self, inputType, inputValue):
+        self.inputType = inputType
+        self.inputValue = inputValue
+    
     def request(self, com_obj):
-        com_obj.SetInputValue(0, 'A003540')
+        com_obj.SetInputValue(0, self.itm_cod)
         com_obj.SetInputValue(1, ord('2'))
         com_obj.SetInputValue(4, 100)
-        com_obj.SetInputValue(5, [5])
+        com_obj.SetInputValue(5, [0,5,8,9])
         com_obj.SetInputValue(6, ord('D'))
 
         com_obj.Request()
@@ -20,18 +27,18 @@ class StkChart(object):
         for i in range(cnt):
             if i == 98:
                 # 98번째에 show_series라는 키를 전달
-                evntproc.push('show_series', 'A003540')
+                evntproc.push('show_series', self.itm_cod)
 
             if i == 0:
                 evntproc.push('show_start', 'start')
 
             # 키와 값을 인자로 하여 이벤트처리기에 전달
-            evntproc.push('A003540_clpr', com_obj.GetDataValue(0,i))
+            evntproc.push(self.itm_cod + '_clpr', com_obj.GetDataValue(0,i))
 
 
 
 def echo(serieses, key, dat):
-    print ('key:%s, dat:%s'%(key,dat))
+    print ('key:%s, dat:%s'%(key, dat))
 
 
 def show_series(serieses, key, dat):
@@ -48,10 +55,12 @@ def show_series(serieses, key, dat):
 # https://docs.python.org/2/library/multiprocessing.html
 if __name__ == "__main__":
 
+    itm_cod = "A005930"
+
     # 이벤트처리기 구동
     evntproc = EventProcessor()
     # 옵저버를 등록함, A003540으로 시작하는 키가 도착하면 echo 를 수행함
-    evntproc.add_observer(['A003540*'], echo)
+    evntproc.add_observer([itm_cod + '*'], echo)
     # 옵저버를 등록함, show으로 시작하는 키가 도착하면 show_series를 수행
     evntproc.add_observer(['show*'], show_series)
     evntproc.start()
