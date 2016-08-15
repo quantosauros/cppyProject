@@ -1,5 +1,5 @@
 # coding: utf-8
-from cybosPlus.StockMstM import StockMstM
+from cybosPlus.cpRqRp import StockMstM.StockMstM
 __author__ = 'lhw'
 
 if __name__ == '__main__':

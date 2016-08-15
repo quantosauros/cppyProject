@@ -1,5 +1,5 @@
 # coding: utf-8
-from cybosPlus.StockMst import StockMst
+from cybosPlus.cpRqRp import StockMst.StockMst
 
 __author__ = 'lhw'
 

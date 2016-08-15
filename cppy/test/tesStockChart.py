@@ -1,5 +1,5 @@
 # coding: utf-8
-from cybosPlus.StockChart import StockChart
+from cybosPlus.cpRqRp import StockChart.StockChart
 __author__ = 'lhw'
 
 if __name__ == '__main__':

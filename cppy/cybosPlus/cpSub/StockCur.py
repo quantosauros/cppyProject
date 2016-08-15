@@ -4,11 +4,11 @@ Created on 2016. 8. 14.
 
 @author: Jay
 '''
-from cppy.adaptor import CpRqRpClass
+from cppy.adaptor import CpSubPubClass
 
 
-@CpRqRpClass('dscbo1.StockMst')
-class StockMst(object):
+@CpSubPubClass('dscbo1.StockCur')
+class StockCur(object):
     '''
     주식/업종/ELW 시세 데이터를 수신합니다.
     '''
@@ -42,18 +42,27 @@ class StockMst(object):
         
     def setOutputValue(self, outputTypes):
         self.outputTypes = outputTypes        
+    
+    def setEventProc(self, eventProc):
+        self.eventProc = eventProc
+        #self.eventProc.add_observer(['cls_*'], self.echo)
         
-    def request(self, com_obj):        
+    def setEcho(self, keyPattern, callableFunction):
+        self.eventProc.add_observer(keyPattern, callableFunction)
+
+    def subscribe(self, com_obj):
+        com_obj.Unsubscribe()
         for i in range(len(self.inputTypes)) :
             com_obj.SetInputValue(self.inputTypes[i], self.inputValues[i])
-        com_obj.Request()
-
-    def response(self, com_obj):                
-        result = ""
-        for j in range(0, len(self.outputTypes)) :
-            value = com_obj.GetHeaderValue(self.outputTypes[j])
-            result += str(value) + "; "
-        print (result)
-            
+        com_obj.Subscribe()
+    
+    def publish(self, com_obj):
+        result = []
+        resultStr = ""
+        for i in range(len(self.outputTypes)):
+            result[i] = com_obj.GetHeaderValue(self.outputTypes[i])
+            resultStr += str(result[i]) + "; "
+        
+        self.eventProc.push('cls_%s'%(self.inputValues[0]), resultStr);
             
     
